@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "programadors",
+  "info": {
+    "singularName": "programador",
+    "pluralName": "programadors",
+    "displayName": "Programador"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre_completo": {
+      "type": "string"
+    },
+    "especialidad": {
+      "type": "string"
+    },
+    "descripcion_breve": {
+      "type": "text"
+    },
+    "descripcion_completa": {
+      "type": "blocks"
+    },
+    "foto_perfil": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "correo": {
+      "type": "email"
+    },
+    "estado_activo": {
+      "type": "boolean"
+    },
+    "github_url": {
+      "type": "string"
+    },
+    "linkedin_url": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "nombre_completo"
+    },
+    "proyectos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::proyecto.proyecto",
+      "mappedBy": "programadores"
+    }
+  }
+}

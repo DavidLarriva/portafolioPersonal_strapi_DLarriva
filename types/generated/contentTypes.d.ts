@@ -477,6 +477,95 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiProgramadorProgramador extends Struct.CollectionTypeSchema {
+  collectionName: 'programadors';
+  info: {
+    displayName: 'Programador';
+    pluralName: 'programadors';
+    singularName: 'programador';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    correo: Schema.Attribute.Email;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descripcion_breve: Schema.Attribute.Text;
+    descripcion_completa: Schema.Attribute.Blocks;
+    especialidad: Schema.Attribute.String;
+    estado_activo: Schema.Attribute.Boolean;
+    foto_perfil: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    github_url: Schema.Attribute.String;
+    linkedin_url: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::programador.programador'
+    > &
+      Schema.Attribute.Private;
+    nombre_completo: Schema.Attribute.String;
+    proyectos: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::proyecto.proyecto'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'nombre_completo'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProyectoProyecto extends Struct.CollectionTypeSchema {
+  collectionName: 'proyectos';
+  info: {
+    displayName: 'Proyecto';
+    pluralName: 'proyectos';
+    singularName: 'proyecto';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descripcion_breve: Schema.Attribute.Text;
+    descripcion_completa: Schema.Attribute.Blocks;
+    destacado: Schema.Attribute.Boolean;
+    diseno_interfaces: Schema.Attribute.String;
+    enlace_demo: Schema.Attribute.String;
+    enlace_repositorio: Schema.Attribute.String;
+    imagen_principal: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::proyecto.proyecto'
+    > &
+      Schema.Attribute.Private;
+    nombre: Schema.Attribute.String;
+    programadores: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::programador.programador'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'nombre'>;
+    tecnologias: Schema.Attribute.String;
+    tipo_proyecto: Schema.Attribute.Enumeration<
+      ['academico', 'personal', 'laboral', 'simulado']
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -989,6 +1078,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::programador.programador': ApiProgramadorProgramador;
+      'api::proyecto.proyecto': ApiProyectoProyecto;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
